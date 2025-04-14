@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Activity Evaluator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f2f2f2;
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .result {
+      margin-top: 20px;
+      background: #e9f5ff;
+      padding: 15px;
+      border-left: 5px solid #007bff;
+      border-radius: 6px;
+    }
+
+    .code-comment {
+      white-space: pre-wrap;
+      font-family: monospace;
+      background-color: #f8f9fa;
+      padding: 15px;
+      margin-top: 30px;
+      border-left: 5px solid #6c757d;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Student Activity Evaluator</h1>
+  <div class="container">
+    <label for="name">Student Name:</label>
+    <input type="text" id="studentName" placeholder="Enter student name">
+
+    <label for="scores">Activity Scores (comma-separated):</label>
+    <input type="text" id="activityScores" placeholder="e.g. 10,20,15,5">
+
+    <button onclick="processEvaluation()">Evaluate</button>
+
+    <div id="output" class="result"></div>
+  </div>
+
+  <div class="code-comment">
+    <!--
+    Name: Mangesh Nesarikar
+    USN: 1MS22CS083
+    Section: 6B
+
+    What I learned:
+    Through this project, I understood how JavaScript handles variable scope:
+    - Global variables are accessible throughout the script.
+    - Local variables are confined to functions or block scopes (for let/const).
+    - Lexical scope allows nested functions to access parent function variables.
+    - Hoisting lets us use var-declared variables before their declaration, but their value is undefined.
+    - Function declarations are hoisted fully, but expressions and anonymous functions are not.
+    -->
+  </div>
+
+  <script>
+    // Global variables
+    var studentName;
+    var scoresArray;
+
+    // Function Declaration
+    function calculateTotal(scores) {
+      let total = 0;
+      for (let score of scores) {
+        total += score;
+      }
+      return total;
+    }
+
+    // Function Expression
+    const evaluateRank = function(total) {
+      if (total > 40) return "Star Performer";
+      else if (total >= 30) return "Active";
+      else return "Inactive";
+    };
+
+    // Anonymous function for average
+    const calculateAverage = function(scores) {
+      return (scores.length === 0) ? 0 : (calculateTotal(scores) / scores.length);
+    };
+
+    function generateReport(name, rank) {
+      const message = "Great job on co-curriculars!";
+      // Lexical Scope Example
+      function showDetails() {
+        return `Student: ${name}<br>Rank: ${rank}<br>Message: ${message}`;
+      }
+      return showDetails();
+    }
+
+    function processEvaluation() {
+      // Fetch user input
+      studentName = document.getElementById("studentName").value.trim();
+      const rawScores = document.getElementById("activityScores").value.trim();
+
+      if (!studentName || !rawScores) {
+        alert("Please enter both name and scores.");
+        return;
+      }
+
+      // Convert input to number array
+      scoresArray = rawScores.split(",").map(Number);
+
+      // Hoisting Experiment
+      console.log("Category before declaration:", category); // undefined
+      var category = "Demo Hoisting";
+
+      // Calculate total, average, rank
+      const totalScore = calculateTotal(scoresArray);
+      const avgScore = calculateAverage(scoresArray);
+      const rank = evaluateRank(totalScore);
+      const report = generateReport(studentName, rank);
+
+      // Scope Isolation Test (var inside block)
+      if (true) {
+        var blockVar = "I am declared in a block with var!";
+      }
+
+      // Output
+      document.getElementById("output").innerHTML = `
+        <strong>Student:</strong> ${studentName}<br>
+        <strong>Activity Scores:</strong> [${scoresArray.join(", ")}]<br>
+        <strong>Total Score:</strong> ${totalScore}<br>
+        <strong>Average Score:</strong> ${avgScore.toFixed(2)}<br>
+        <strong>Rank:</strong> ${rank}<br><br>
+        <strong>Report:</strong><br>${report}<br><br>
+        <em>Scope Isolation Test Output:</em><br>${blockVar}
+      `;
+    }
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Activity Evaluator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f2f2f2;
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .result {
+      margin-top: 20px;
+      background: #e9f5ff;
+      padding: 15px;
+      border-left: 5px solid #007bff;
+      border-radius: 6px;
+    }
+
+    .code-comment {
+      white-space: pre-wrap;
+      font-family: monospace;
+      background-color: #f8f9fa;
+      padding: 15px;
+      margin-top: 30px;
+      border-left: 5px solid #6c757d;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Student Activity Evaluator</h1>
+  <div class="container">
+    <label for="name">Student Name:</label>
+    <input type="text" id="studentName" placeholder="Enter student name">
+
+    <label for="scores">Activity Scores (comma-separated):</label>
+    <input type="text" id="activityScores" placeholder="e.g. 10,20,15,5">
+
+    <button onclick="processEvaluation()">Evaluate</button>
+
+    <div id="output" class="result"></div>
+  </div>
+
+  <div class="code-comment">
+    <!--
+    Name: Mangesh Nesarikar
+    USN: 1MS22CS083
+    Section: 6B
+
+    What I learned:
+    Through this project, I understood how JavaScript handles variable scope:
+    - Global variables are accessible throughout the script.
+    - Local variables are confined to functions or block scopes (for let/const).
+    - Lexical scope allows nested functions to access parent function variables.
+    - Hoisting lets us use var-declared variables before their declaration, but their value is undefined.
+    - Function declarations are hoisted fully, but expressions and anonymous functions are not.
+    -->
+  </div>
+
+  <script>
+    // Global variables
+    var studentName;
+    var scoresArray;
+
+    // Function Declaration
+    function calculateTotal(scores) {
+      let total = 0;
+      for (let score of scores) {
+        total += score;
+      }
+      return total;
+    }
+
+    // Function Expression
+    const evaluateRank = function(total) {
+      if (total > 40) return "Star Performer";
+      else if (total >= 30) return "Active";
+      else return "Inactive";
+    };
+
+    // Anonymous function for average
+    const calculateAverage = function(scores) {
+      return (scores.length === 0) ? 0 : (calculateTotal(scores) / scores.length);
+    };
+
+    function generateReport(name, rank) {
+      const message = "Great job on co-curriculars!";
+      // Lexical Scope Example
+      function showDetails() {
+        return `Student: ${name}<br>Rank: ${rank}<br>Message: ${message}`;
+      }
+      return showDetails();
+    }
+
+    function processEvaluation() {
+      // Fetch user input
+      studentName = document.getElementById("studentName").value.trim();
+      const rawScores = document.getElementById("activityScores").value.trim();
+
+      if (!studentName || !rawScores) {
+        alert("Please enter both name and scores.");
+        return;
+      }
+
+      // Convert input to number array
+      scoresArray = rawScores.split(",").map(Number);
+
+      // Hoisting Experiment
+      console.log("Category before declaration:", category); // undefined
+      var category = "Demo Hoisting";
+
+      // Calculate total, average, rank
+      const totalScore = calculateTotal(scoresArray);
+      const avgScore = calculateAverage(scoresArray);
+      const rank = evaluateRank(totalScore);
+      const report = generateReport(studentName, rank);
+
+      // Scope Isolation Test (var inside block)
+      if (true) {
+        var blockVar = "I am declared in a block with var!";
+      }
+
+      // Output
+      document.getElementById("output").innerHTML = `
+        <strong>Student:</strong> ${studentName}<br>
+        <strong>Activity Scores:</strong> [${scoresArray.join(", ")}]<br>
+        <strong>Total Score:</strong> ${totalScore}<br>
+        <strong>Average Score:</strong> ${avgScore.toFixed(2)}<br>
+        <strong>Rank:</strong> ${rank}<br><br>
+        <strong>Report:</strong><br>${report}<br><br>
+        <em>Scope Isolation Test Output:</em><br>${blockVar}
+      `;
+    }
+  </script>
+</body>
+</html>
