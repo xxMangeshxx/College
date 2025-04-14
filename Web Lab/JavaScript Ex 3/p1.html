@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple JS Quiz App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>JavaScript Quiz</h1>
+  <button onclick="startQuiz()">Start Quiz</button>
+  <button onclick="reviewScore()">Review Score (Bonus)</button>
+
+  <p id="result"></p>
+
+  <script>
+    // Global variable to track score
+    var score = 0;
+
+    // Function Declaration
+    function question1() {
+      var answer = prompt("Q1: What is the capital of France?");
+      if (answer.toLowerCase() === "paris") {
+        score++;
+        alert("Correct!");
+      } else {
+        alert("Incorrect.");
+      }
+    }
+
+    // Function Expression
+    const question2 = function() {
+      var answer = prompt("Q2: 5 + 3 = ?");
+      if (parseInt(answer) === 8) {
+        score++;
+        alert("Correct!");
+      } else {
+        alert("Incorrect.");
+      }
+    };
+
+    // Hoisting demonstration
+    function question3() {
+      // Use of variable before declaration (hoisting effect)
+      console.log("Value of 'hoistedVar' before declaration:", hoistedVar); // undefined
+      var hoistedVar = "I am hoisted!";
+      console.log("Value of 'hoistedVar' after declaration:", hoistedVar);
+
+      let answer = prompt("Q3: What keyword is used to declare a constant in JavaScript?");
+      if (answer.toLowerCase() === "const") {
+        score++;
+        alert("Correct!");
+      } else {
+        alert("Incorrect.");
+      }
+
+      // Bonus test: local score variable
+      var localScore = 99; // This variable is NOT accessible outside this function
+    }
+
+    function startQuiz() {
+      score = 0; // Reset score at start
+      question1();
+      question2();
+      question3();
+      document.getElementById("result").innerText = "Your final score is: " + score + "/3";
+    }
+
+    function reviewScore() {
+      try {
+        // Trying to access localScore outside its function
+        console.log("Trying to access localScore:", localScore); // Should throw ReferenceError
+        alert("localScore: " + localScore);
+      } catch (e) {
+        alert("Cannot access 'localScore': " + e.message);
+      }
+    }
+  </script>
+</body>
+</html>
